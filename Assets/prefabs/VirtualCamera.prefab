@@ -1,0 +1,33 @@
+{
+  "RootObject": {
+    "__guid": "68541260-42bf-424c-bc21-2f7d73c1ef3d",
+    "Flags": 0,
+    "Name": "Object",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "MANIFOLD.Camera.VirtualCamera",
+        "__guid": "7dfc0437-e6da-4273-b16a-9eca495e4492",
+        "FieldOfView": 90,
+        "Priority": 0,
+        "TransitionData": {
+          "Mode": "Predefined",
+          "TransitionTime": 1,
+          "EaseFunction": "EaseOut",
+          "EaseCurve": {
+            "rangex": "0,0",
+            "rangey": "0,0"
+          }
+        },
+        "UseCustomTransition": false
+      }
+    ]
+  },
+  "ShowInMenu": true,
+  "MenuPath": "Too Many Cameras/Virtual Camera",
+  "MenuIcon": "videocam",
+  "DontBreakAsTemplate": false,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
