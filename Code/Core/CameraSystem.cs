@@ -77,7 +77,7 @@ namespace MANIFOLD.Camera {
                 mainCameraBrain.WorldRotation = Rotation.Slerp(fromRot, toRot, easedFactor);
                 mainCameraBrain.Camera.FieldOfView = MathX.Lerp(transitionFrom.FieldOfView, transitionTo.FieldOfView, easedFactor);
 
-                currentTransitionTimer += Time.Delta;
+                currentTransitionTimer += mainCameraBrain.UseRealTime ? RealTime.Delta : Time.Delta;
                 if (currentTransitionTimer >= currentTransitionData.Duration) {
                     currentTransitionTimer = currentTransitionData.Duration;
                     inTransition = false;
