@@ -25,17 +25,9 @@ namespace MANIFOLD.Camera {
         public VirtualCamera CurrentCamera => transitionTo;
         
         public CameraSystem(Scene scene) : base(scene) {
-            Listen(Stage.SceneLoaded, 100, OnLoad, "cameras.load");
-            Listen(Stage.Interpolation, 100, CameraUpdate, "camera.update");
             cameraStack = new LinkedList<VirtualCamera>();
-        }
-
-        private void OnLoad() {
-            FindBrain();
-
-            foreach (VirtualCamera cam in Scene.Components.GetAll<VirtualCamera>(FindMode.EverythingInDescendants)) {
-                cam.OnSystemInit(this);
-            }
+            
+            Listen(Stage.FinishUpdate, 100, CameraUpdate, "camera.update");
         }
         
         private void CameraUpdate() {
@@ -98,7 +90,6 @@ namespace MANIFOLD.Camera {
         public void ActivateCamera(VirtualCamera newCamera, bool updateNow = false) {
             if (!mainCameraBrain.IsValid()) {
                 Log.Warning($"Tried to activate virtual camera '${newCamera.GameObject.Name}' but there is no brain in the scene.");
-                return;
             }
             
             VirtualCamera highestCamera = null;

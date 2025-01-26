@@ -79,7 +79,17 @@ namespace MANIFOLD.Camera {
             }
         }
 
+        protected override void OnStart() {
+            if (internalSystem == null) {
+                OnSystemInit(Scene.GetSystem<CameraSystem>());
+            }
+        }
+
         protected override void OnEnabled() {
+            if (internalSystem == null) {
+                OnSystemInit(Scene.GetSystem<CameraSystem>());
+            }
+            
             System.ActivateCamera(this);
         }
 
