@@ -2,6 +2,8 @@
 using Sandbox.Utility;
 
 namespace MANIFOLD.Camera {
+    public enum FOVMode { Vertical, Horizontal }
+    
     /// <summary>
     /// Imagine a <see cref="CameraComponent"/> but it isn't real.
     /// </summary>
@@ -15,9 +17,15 @@ namespace MANIFOLD.Camera {
         public int Priority { get; set; }
         
         /// <summary>
-        /// Camera's horizontal field of view in degrees.
+        /// Which type of field of view to use.
+        /// <see cref="FOVMode.Vertical"/> is recommended.
         /// </summary>
-        [Property, Range(0, 180), Header("Lens")]
+        [Property, Header("Lens"), Title("FOV Type")]
+        public FOVMode FOVMode { get; set; }
+        /// <summary>
+        /// Camera's field of view in degrees.
+        /// </summary>
+        [Property, Range(0, 180)]
         public float FieldOfView { get; set; } = 90f;
         
         /// <summary>

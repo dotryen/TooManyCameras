@@ -67,7 +67,7 @@ namespace MANIFOLD.Camera {
                 GetCameraTransform(transitionFrom, out Vector3 fromPos, out Rotation fromRot);
                 mainCameraBrain.WorldPosition = Vector3.Lerp(fromPos, toPos, easedFactor);
                 mainCameraBrain.WorldRotation = Rotation.Slerp(fromRot, toRot, easedFactor);
-                mainCameraBrain.Camera.FieldOfView = MathX.Lerp(transitionFrom.FieldOfView, transitionTo.FieldOfView, easedFactor);
+                mainCameraBrain.Camera.FieldOfView = MathX.Lerp(GetCameraFOV(transitionFrom), GetCameraFOV(transitionTo), easedFactor);
 
                 currentTransitionTimer += mainCameraBrain.UseRealTime ? RealTime.Delta : Time.Delta;
                 if (currentTransitionTimer >= currentTransitionData.Duration) {
@@ -77,7 +77,7 @@ namespace MANIFOLD.Camera {
             } else {
                 mainCameraBrain.WorldPosition = toPos;
                 mainCameraBrain.WorldRotation = toRot;
-                mainCameraBrain.Camera.FieldOfView = transitionTo.FieldOfView;
+                mainCameraBrain.Camera.FieldOfView = GetCameraFOV(transitionTo);
             }
         }
 
@@ -85,6 +85,11 @@ namespace MANIFOLD.Camera {
             cam.DoExtensionUpdate(out Vector3 localPos, out Rotation localRot);
             pos = cam.WorldPosition + (localPos * cam.WorldRotation);
             rot = cam.WorldRotation * localRot;
+        }
+
+        private float GetCameraFOV(VirtualCamera cam) {
+            if (cam.FOVMode == FOVMode.Vertical) return (2 * float.Atan(float.Tan(cam.FieldOfView.DegreeToRadian() / 2) * Screen.Aspect)).RadianToDegree();
+            return cam.FieldOfView;
         }
         
         public void ActivateCamera(VirtualCamera newCamera, bool updateNow = false) {
